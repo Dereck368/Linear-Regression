@@ -58,23 +58,29 @@ def main():
     # print beta's
     beta0_hat, beta1_hat = linReg(x, y)
     print()
-    print(f'β̂1 (Intercept): {beta0_hat} \nβ̂0 (Slope): {beta1_hat})')
+    print(f'β̂0 (Slope): {beta0_hat}) \nβ̂1 (Intercept): {beta1_hat} )')
     print()
     
     # get StatsModel
     res = stats_summary(x, y)
-    print('-------')
-    print("OlS Regression Summary")
-    print('-------')
     print(res)
 
     # Can you conclude that there is a linear trend in the data? This is equivalent to ask whether you
     # can conclude that β1 is equal to zero or not. Justify your answer using statistical inference.
 
-    # From this StatsModel we can conclude that their is a linear Trend in the data.
-    # The reason for this is because our H₀ is β̂1 = 0 (No linear trend)
-    # and our H₁ is β̂1 != 0 (there is a linear trend)
-    #
-    #
+        # From this StatsModel we can conclude that their is a linear Trend in the data.
+        # The reason for this is because our H₀: β̂1 = 0 (No linear trend)
+        # and our H₁: β̂1 != 0 (there is a linear trend)
+        # we have a p value of 0.00
+        # the p value is less then the signifance level so we can reject the null hypothesis
+        # because we rejected the null hyposthesis we can conclude that β̂1 != 0
+        # which means their is a linear trend in the data
+
+    # What about β0, can you conclude whether this parameter is zero or not?
+
+        # H₀: β̂0 = 0
+        # and our H₁: β̂0 != 0
+        # We can conlude that it isn't zero because hte p value is less then the signifance level,
+        # rejecting teh null hypothesis β̂0 != 0
 
 main()
