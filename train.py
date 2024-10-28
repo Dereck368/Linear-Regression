@@ -86,6 +86,7 @@ def model(df):
         features_selected = selector.get_support(indices=True)
         X_train = X.iloc[:, features_selected]
         
+        #calculate adjusted r2
         model.fit(X_train, y)
         r2 = model.score(X_train, y)
 
