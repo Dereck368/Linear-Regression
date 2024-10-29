@@ -106,6 +106,8 @@ def model(df):
     # graph adjusted r2 of each model
         #to do this create list for models then graph each one
 
+
+
 def main():
     df = get_DataFrame()
 
