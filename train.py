@@ -63,6 +63,7 @@ def suggested_features(x):
 
 def select_model(x_train, y_train):
     X = suggested_features(x_train)
+    print(X)
     
     p = X.shape[1] - 1
 
@@ -97,6 +98,9 @@ def select_model(x_train, y_train):
             best_adjusted_r2 = adjusted_r2
             best_features = features_selected
             best_model = model
+
+    print(X.columns[best_features])
+    print(best_adjusted_r2)
  
     # plot
     # plt.figure(figsize=(10, 6))
@@ -107,7 +111,7 @@ def select_model(x_train, y_train):
     # plt.title("Adjusted R² Across Forward Selection Models")
     # plt.xticks(rotation=45)
     # plt.show()
-    
+    # plt.savefig("adjustedR2.png")
     return X.columns[best_features] , best_model
 
 def lasso_reg(X_train, y_train):
@@ -127,6 +131,8 @@ def lasso_reg(X_train, y_train):
     lasso_pred = lasso.predict(X_train)
     lasso_r2 = r2_score(y_train, lasso_pred)
     lasso_adj_r2 = 1 - (1 - lasso_r2) * (n - 1) / (n - p - 1)
+
+    print(lasso_adj_r2)
 
     # plot
     # plt.scatter(X_train['x'], y_train, color='green', s=10, label='Training data')
@@ -154,6 +160,8 @@ def ridge_reg(X_train, y_train):
     ridge_pred = ridge.predict(X_train)
     ridge_r2 = r2_score(y_train, ridge_pred)
     ridge_adj_r2 = 1 - (1 - ridge_r2) * (n - 1) / (n - p - 1)
+
+    print(ridge_adj_r2)
 
     # plot
     # plt.scatter(X_train['x'], y_train, color='green', s=10, label='Training data')
@@ -243,6 +251,7 @@ def main():
     # get StatsModel
     # res = stats_summary(x, y)
     # # print(res)
+    # select_model(x,y)
 
     tdf = get_test_df()
     X_test= tdf['Temperature']
