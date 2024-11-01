@@ -94,6 +94,7 @@ def select_model(x_train, y_train):
 
         adj_r2_values.append(adjusted_r2)
 
+        #compares adjusted_r2 between models
         if adjusted_r2 > best_adjusted_r2:
             best_adjusted_r2 = adjusted_r2
             best_features = features_selected
@@ -178,11 +179,15 @@ def predictions_on_test_data(X_test, y_test, model, model_name="Model"):
     X = suggested_features(X_test)
     y_pred = model.predict(X)
 
+    n = X.shape[0]  # number of samples
+    p = X.shape[1]  # number of predictors
+
     mse = root_mean_squared_error(y_test, y_pred) ** 2
     r2 = r2_score(y_test, y_pred)
+    adj_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
     print(f"\n{model_name} performance on the Test Data:")
     print(f"Mean Squared Error (MSE): {mse:.4f}")
-    print(f"R squared: {r2:.4f}")
+    print(f"Adjusted R squared: {adj_r2:.4f}")
 
     plt.figure(figsize=(10, 6))
     plt.scatter(X['x'], y_test, color='green', s=10, label='Actual Test Data')
@@ -199,11 +204,15 @@ def linear_reg_predictions_on_test_data(X_test, y_test, X_train, y_train):
     X = X[features]
     y_pred = model.predict(X)
 
+    n = X.shape[0]  # number of samples
+    p = X.shape[1]  # number of predictors
+    
     mse = root_mean_squared_error(y_test, y_pred) ** 2
     r2 = r2_score(y_test, y_pred)
+    adj_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
     print("Lienar Regression performance on the Test Data:")
     print(f"Mean Squared Error (MSE): {mse:.4f}")
-    print(f"R squared: {r2:.4f}")
+    print(f"Adjusted R squared: {adj_r2:.4f}")
 
     plt.figure(figsize=(10, 6))
     plt.scatter(X['x'], y_test, color='green', s=10, label='Actual Test Data')
@@ -213,8 +222,6 @@ def linear_reg_predictions_on_test_data(X_test, y_test, X_train, y_train):
     plt.title('Linear Predictions v Actual Test Data')
     plt.legend()
     plt.show()
-
-
 
 def main():
     df = get_DataFrame()
@@ -259,6 +266,5 @@ def main():
     linear_reg_predictions_on_test_data(X_test, y_test, x, y)
     predictions_on_test_data(X_test, y_test, ridge, 'Ridge Regression')
     predictions_on_test_data(X_test, y_test, lasso, 'Lasso Regression')
-   
 
 main()
